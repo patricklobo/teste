@@ -88,6 +88,7 @@ const downloadMain = (link = "", dest = "") => {
         } catch (error) {
           console.log(error);
         }
+        alert(`Erro no download ada imagem ${dest}`);
         falha("download");
       });
   });
