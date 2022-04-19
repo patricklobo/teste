@@ -1,0 +1,76 @@
+.catraca {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 20px;
+}
+.img-catraca {
+    width: 100%;
+}
+.cont-start {
+    color: green;
+    font-size: 20px;
+}
+.cont-end {
+    color: rgb(128, 0, 0);
+    font-size: 20px;
+}
+.rodape {
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.div-update {
+    position: fixed;
+    bottom: 50px;
+    font-size: 12px;
+}
+
+.div-update .conteudo {
+    
+    font-weight: 900;
+}
+
+.cards {
+    display: flex;
+}
+.card i {
+    font-size: 85px;
+    text-align: left;
+}
+
+.card {
+    width: 200px;
+    margin-left: 10px;
+    text-align: right;
+    padding: 10px;
+    border-radius: 20px;
+    background: black;
+    color: white;
+}
+.card .titulo {
+    /* font-size: 10px; */
+}
+.card .valor {
+    font-size: 32px;
+}
+
+h1 {
+    font-weight: 900;
+}
+
+.color-faceids {
+    background-color: blueviolet;
+}
+.color-baixados {
+    background-color: rgb(17, 19, 126);
+}
+.color-local {
+    background-color: rgb(17, 126, 59);
+}
+.color-total {
+    background-color: rgb(126, 17, 24);
+}
+.color-pendente {
+    background-color: rgb(208, 156, 0);
+}

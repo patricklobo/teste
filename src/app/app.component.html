@@ -1,0 +1,223 @@
+<div [formGroup]="formData" class="container">
+  <h1>Controle de acesso</h1>
+  <div *ngIf="evento" class="executando">
+    <h2>{{ evento.titulo }} - {{ evento.data | date: "dd/MM/yyyy" }}</h2>
+    <div class="cards">
+      <div class="card color-faceids">
+        <i class="las la-portrait"></i>
+        <span class="titulo"> FaceIds </span>
+        <span class="valor">
+          {{ faceids }}
+        </span>
+      </div>
+      <div class="card color-baixados">
+        <i class="las la-cloud-download-alt"></i>
+        <span class="titulo"> Baixados </span>
+        <span class="valor">
+          {{ baixados }}
+        </span>
+      </div>
+      <div class="card color-local">
+        <i class="las la-user-check"></i>
+        <span class="titulo"> Validados </span>
+        <span class="valor">
+          {{ nolocal }}
+        </span>
+      </div>
+      <div class="card color-total">
+        <i class="las la-exchange-alt"></i>
+        <span class="titulo"> Total movimentos </span>
+        <span class="valor">
+          {{ total }}
+        </span>
+      </div>
+      <div class="card color-pendente">
+        <i class="las la-exclamation-triangle"></i>
+        <span class="titulo"> Pendentes </span>
+        <span class="valor">
+          {{ pendentes }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!evento" class="form-inicial">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="las la-calendar"></i>
+          </span>
+          <input
+            formControlName="data"
+            type="date"
+            class="form-control"
+            placeholder="Data"
+            aria-label="data"
+            aria-describedby="basic-addon1"
+          />
+          <button
+            (click)="getEventos()"
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon1"
+          >
+            <i *ngIf="!loading" class="las la-search"></i>
+            <loading *ngIf="loading"></loading>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <select
+            formControlName="evento"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option [value]="null" selected>Selecione o evento</option>
+            <option
+              *ngFor="let item of eventos; let i = index"
+              [value]="item.id"
+            >
+              {{ item.data | date: "dd/MM/yyyy" }} {{ item.titulo }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" (click)="buscar()" class="btn btn-primary">
+          <span *ngIf="!loading"> Iniciar </span>
+          <loading *ngIf="loading"></loading>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="countIngressosSemFoto" class="p-3">
+    <h5>
+      Baixando e configurando os Face Readers | {{ countIngressosBaixados }} de
+      {{ countIngressosSemFoto }} imagens...
+    </h5>
+    <div class="progress">
+      <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        aria-valuenow=""
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{
+          width: (countIngressosBaixados / countIngressosSemFoto) * 100 + '%'
+        }"
+      ></div>
+    </div>
+  </div>
+
+  <div *ngIf="!catracas.length" class="catraca-conf">
+    <h3>Configuração das catracas</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label"
+            >IPS das catracas um por linha</label
+          >
+          <textarea
+            formControlName="catracas"
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <button type="button" (click)="setCatracas()" class="btn btn-primary">
+          Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="catraca-conf mt-3">
+    <h3>Catracas</h3>
+    <div class="row">
+      <div *ngFor="let item of onlyCatracas()" class="col-md-3">
+        <div class="mb-3">
+          <div class="catraca p-3">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="text-center p-3">
+                  <i class="las la-at"></i>
+                  {{ item }}<br>
+                  <i class="las la-user-lock"></i>
+                  {{ catracaSockets[item]?.ipfaceid }}
+                </h4>
+                <img class="img-catraca p-3" src="assets/catraca.png" alt="" />
+                <div class="text-center mb-2">
+                  <div class="d-grid gap-2">
+                    <button
+                    type="button"
+                    (click)="openTv(item)"
+                    class="btn btn-info"
+                  >
+                  <i class="las la-tv"></i> ABRIR TV
+                  </button>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="d-grid gap-2">
+                    <button
+                    type="button"
+                    (click)="liberaUmGiro(item)"
+                    class="btn btn-success"
+                  >
+                    <i class="las la-sync-alt"></i> LIBERA UM GIRO
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="div-update p-2">
+  <div class="titulo" >
+    Último update:
+  </div>
+  <div *ngIf="evento" class="conteudo">
+    <span>{{ ultimoupdate | date: "dd/MM/yyyy" }} as {{ ultimoupdate | date: "HH:mm:ss" }}</span>
+  </div>
+  <div *ngIf="!evento" class="conteudo">
+    --/--/---- as --:--:--
+  </div>
+</div>
+<div class="rodape p-2">
+  <button type="button" (click)="resetCatraca()" class="btn btn-danger me-2">
+    Reset Catracas
+  </button>
+  <button *ngIf="evento" type="button" (click)="resetEvento()" class="btn btn-danger me-2">
+    Reset Evento
+  </button>
+  <button *ngIf="evento" type="button" (click)="reloadCatracas()" class="btn btn-info me-2">
+    Reload Catracas
+  </button>
+  <button *ngIf="evento" type="button" (click)="reloadCatracasFaceIds()" class="btn btn-info me-2">
+    Reload FaceIds
+  </button>
+  <button *ngIf="evento" type="button" (click)="resetFaceId()" class="btn btn-danger me-2">
+    Reset FaceIds
+  </button>
+  <button *ngIf="evento" type="button" (click)="dwnloadAllImagens()" class="btn btn-success me-2">
+    Download Imagens
+  </button>
+  <button *ngIf="evento" type="button" (click)="sync()" class="btn btn-success">
+    <loading *ngIf="loading"></loading>
+    <i *ngIf="!loading" class="las la-sync-alt"></i>
+    Sync
+  </button>
+</div>
+
+
