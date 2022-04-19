@@ -6,7 +6,7 @@
     "ng": "ng",
     "rebuild": "electron-rebuild -f -w sqlite3 && electron-rebuild -f -w sharp",
     "start": "ng build --base-href ./ && electron . dev",
-    "prod": "ng build --base-href ./ && rm -rf /Applications/catraca2-darwin-x64; electron-packager . --out=/Applications && open /Applications/catraca2-darwin-x64/catraca2.app",
+    "prod": "ng build --base-href ./ && rm -rf /Applications/catraca2-darwin-x64; electron-packager . --out=/Applications && open /Applications/catraca2-darwin-x64/catraca2.app", 
     "release": "ng build --base-href ./ && rm -rf ./catraca2-darwin-arm64; electron-packager . && electron-installer-dmg ./catraca2-darwin-arm64/catraca2.app ControleAcesso --overwrite ",
     "build": "ng build",
     "test": "ng test",
