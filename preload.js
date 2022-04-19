@@ -82,8 +82,12 @@ const downloadMain = (link = "", dest = "") => {
         });
       })
       .on("error", function (err) {
-        console.log(err);
-        fs.unlinkSync(dest);
+        try {
+          console.log(err);
+          fs.unlinkSync(dest);
+        } catch (error) {
+          console.log(error);
+        }
         falha("download");
       });
   });
@@ -132,17 +136,6 @@ const pdfToImagemVacinacao = async (evento = "") => {
             console.log("pdf to image generation -> " + newname + ".jpg");
             return resolve;
           });
-
-          // console.log(PDFImage);
-          // const pdfImage = new PDFImage(path);
-          // let data = await pdfImage.convertPage(0);
-          // console.log(data);
-          // pdfImage.convertPage(0).then(function (imagePath) {
-          //   console.log(pdfImage)
-          //   let index = path.indexOf(".pdf");
-          //   let outpath = path.substr(0, index);
-          //   console.log(outpath, imagePath, fs.existsSync(outpath + "-0.png")); // => true
-          // });
         } catch (error) {
           console.log(error);
         }
