@@ -248,6 +248,5 @@ contextBridge.exposeInMainWorld("electron", {
   //   doThing: () => ipcRenderer.sendToHost("do-a-thing"),
 });
 startServer();
-// Renderer (Main World)
 
-// window.electron.doThing();
+//version teste
