@@ -167,7 +167,7 @@ export class SqlService {
           }
           count++;
         }
-      } catch (error) {x
+      } catch (error) {
         console.log(error);
       }
       

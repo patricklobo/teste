@@ -320,9 +320,9 @@ export class AppComponent implements OnInit {
         }
         count++;
       }
-      if(isCon) this.catracasReload = this.catracas;
+      if(isCon) this.catracasReload = [];
       if(!isCon){
-        this.catracasReload = [];
+        this.catracasReload = this.catracas;
         count = 0;
         for (let i of this.catracas) {
           if (count % 2 == 0) {
@@ -375,7 +375,7 @@ export class AppComponent implements OnInit {
           if (count % 2 != 0) {
             let ip = this.catracas[count - 1];
             this.catracaSockets[ip].ipfaceid = i;
-            await this.faceid.resetDevice(i);
+            this.faceid.resetDevice(i).then();
           }
           count++;
         }
